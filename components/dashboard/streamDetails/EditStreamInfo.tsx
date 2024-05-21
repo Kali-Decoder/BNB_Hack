@@ -27,9 +27,9 @@ const EditStreamInfo = (props: Props) => {
     try{
       toast("Saving changes");
       // get thumbnail Cid
-      const thumbnailUri =await storeFile(filePickerRef.current.files[0],props.web3storageToken); 
-      toast.success("Thumbnail Uploaded to Ipfs.")
-      const saveTxn = await setStreamInfo(title,thumbnailUri); 
+      // const thumbnailUri =await storeFile(filePickerRef.current.files[0],props.web3storageToken); 
+      toast.success("Thumbnail Uploaded to Ipfs...")
+      const saveTxn = await setStreamInfo(title,"https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.investopedia.com%2Fterms%2Fb%2Fblockchain.asp&psig=AOvVaw2kS6cEt8EUh8sZBfISFGq_&ust=1716382183063000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJiZtITknoYDFQAAAAAdAAAAABAE"); 
       toast.success("Changes Saved");
       window.location.reload();
       setEditing(false);
