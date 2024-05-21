@@ -1,5 +1,5 @@
+require("@nomicfoundation/hardhat-toolbox");
 require("dotenv").config();
-require("@nomiclabs/hardhat-waffle");
 const { PRIVATE_KEY } = process.env;
 module.exports = {
   defaultNetwork: "localhost",
@@ -8,6 +8,18 @@ module.exports = {
       url: "http://127.0.0.1:8545",
     },
     hardhat: {},
+    PolygonMumbai: {
+      url: "https://rpc-mumbai.maticvigil.com",
+      accounts: [PRIVATE_KEY],
+    },
+    matic: {
+      url: "https://rpc-mainnet.maticvigil.com",
+      accounts: [PRIVATE_KEY],
+    },
+    taraxa_testnet: {
+      url: "https://rpc.testnet.taraxa.io/",
+      accounts: [PRIVATE_KEY],
+    },
     opBnb: {
       url: "https://opbnb-testnet.publicnode.com",
       accounts: [PRIVATE_KEY],
