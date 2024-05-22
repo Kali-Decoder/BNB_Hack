@@ -109,7 +109,7 @@ const ProfileInfo = ({ profileData }: Props) => {
         setIsSubscribed={setIsSubscribed}
       />
       <div className="flex items-center gap-4">
-        <Avatar src={"https://ipfs.io/ipfs/" + profile?.pfp} />
+        <Avatar src="https://media.licdn.com/dms/image/D4D03AQEQJqL85iYI4A/profile-displayphoto-shrink_400_400/0/1716271708118?e=1721865600&v=beta&t=1XiPJbMzZhQr29EcCxIkfkZC6hg4z2s59W2c8cvTWgU" />
         <div className="flex-1 font-display">
           <Link href={`/u/${profile?.username}`}>
             <h6 className="text-xl cursor-pointer font-medium">

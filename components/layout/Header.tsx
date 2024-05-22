@@ -24,7 +24,7 @@ const Header = () => {
                 className="hover:scale-110 duration-300 ease-out cursor-pointer "
               />
             </Link>
-            <h1 className="font-display font-bold text-2xl ">Super Stream</h1>
+            <h1 className="font-display font-bold text-2xl ">StreamFreely</h1>
           </div>
           <div className="flex gap-3 items-center ">
             {!currentUser.loading && !currentUser.hasProfile && (
