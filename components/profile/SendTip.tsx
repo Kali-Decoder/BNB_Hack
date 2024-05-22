@@ -4,7 +4,8 @@ import { ethers, providers } from "ethers";
 import GiftIcon from "@heroicons/react/outline/GiftIcon";
 import XIcon from "@heroicons/react/outline/XIcon";
 import useSuperstreamContract from "../../hooks/useSuperstreamContract";
-
+import { USDCX_ABI } from "../../constants";
+import { useAccount } from "@thirdweb-dev/react";
 type Props = {
   isOpen: boolean;
   setIsOpen: (boolean) => void;
@@ -15,76 +16,25 @@ type Props = {
 const SendTip = ({ isOpen, setIsOpen,toAddress,toUser }: Props) => {
   const [tipAmount, setTipAmount] = React.useState<any>(0.0);
   const [maticPrice, setMaticPrice] = React.useState<any>(0.0);
+  const address = useAccount();
   const {sendTip} = useSuperstreamContract();
   const getMaticPrice = async (): Promise<void> => {
     try {
       const provider = ethers.providers.getDefaultProvider(
         "https://opbnb-testnet.publicnode.com"
       );
-      const aggregatorV3InterfaceABI = [
-        {
-          inputs: [],
-          name: "decimals",
-          outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "description",
-          outputs: [{ internalType: "string", name: "", type: "string" }],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            { internalType: "uint80", name: "_roundId", type: "uint80" },
-          ],
-          name: "getRoundData",
-          outputs: [
-            { internalType: "uint80", name: "roundId", type: "uint80" },
-            { internalType: "int256", name: "answer", type: "int256" },
-            { internalType: "uint256", name: "startedAt", type: "uint256" },
-            { internalType: "uint256", name: "updatedAt", type: "uint256" },
-            { internalType: "uint80", name: "answeredInRound", type: "uint80" },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "latestRoundData",
-          outputs: [
-            { internalType: "uint80", name: "roundId", type: "uint80" },
-            { internalType: "int256", name: "answer", type: "int256" },
-            { internalType: "uint256", name: "startedAt", type: "uint256" },
-            { internalType: "uint256", name: "updatedAt", type: "uint256" },
-            { internalType: "uint80", name: "answeredInRound", type: "uint80" },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "version",
-          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-          stateMutability: "view",
-          type: "function",
-        },
-      ];
-      const contractAddress = "0x1ff043d7756744B5BA5e079cF2cbBE75634D0967";
+     
+      const contractAddress = "0x371907DA46F9771189C068864115a4e84a227469";
       const priceFeed = new ethers.Contract(
         contractAddress,
-        aggregatorV3InterfaceABI,
+        USDCX_ABI,
         provider
       );
-
-      const latestRoundData = await priceFeed.latestRoundData();
-  
-      const bnbPrice = (
-        latestRoundData?.answer.toNumber() / 100000000
-      ).toFixed(2);
-      setMaticPrice(bnbPrice);
+      
+      let balance = await priceFeed.balanceOf("0xcfa038455b54714821f291814071161c9870B891");
+      balance = ethers.utils.formatUnits(balance, 18);
+      console.log(balance);
+      setMaticPrice(balance);
     } catch (err) {
       console.error(err);
     }
@@ -155,7 +105,7 @@ const SendTip = ({ isOpen, setIsOpen,toAddress,toUser }: Props) => {
                 />
                 <div className="flex gap-2 items-center my-4">
                   <p className="text-gray-300 font-display max-w-fit font-medium bg-gray-700 p-1 px-3 rounded-xl">
-                    1 BNB = $ {maticPrice}
+                  Balance = USDCX <span className="text-green-400">{maticPrice}</span>
                   </p>
                   <p className="text-violet-300 bg-violet-900 font-display bg-opacity-50 font-medium  ring-1 ring-violet-400  p-1 px-3 rounded-xl">
                    Tip : {tipAmount} OPBNB ( $ {(maticPrice * tipAmount).toFixed(2)} )
